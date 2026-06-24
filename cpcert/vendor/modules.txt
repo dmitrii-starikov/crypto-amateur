@@ -1,0 +1,8 @@
+# github.com/ddulesov/gogost v1.0.0
+## explicit; go 1.12
+github.com/ddulesov/gogost/gost28147
+github.com/ddulesov/gogost/gost3410
+github.com/ddulesov/gogost/gost34112012256
+github.com/ddulesov/gogost/gost34112012512
+github.com/ddulesov/gogost/gost341194
+github.com/ddulesov/gogost/internal/gost34112012

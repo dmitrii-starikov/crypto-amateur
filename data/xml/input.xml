@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document>
+    <Payload Id="payload-1">
+        <Header>
+            <ID>DOC-001</ID>
+            <Date>2024-01-20</Date>
+            <Version>1.0</Version>
+        </Header>
+        <Content>
+            <Text>Тестовый документ для подписи XAdES</Text>
+            <Amount>1000.50</Amount>
+            <Currency>RUB</Currency>
+        </Content>
+    </Payload>
+</Document>
