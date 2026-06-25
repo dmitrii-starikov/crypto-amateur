@@ -14,8 +14,8 @@
 
 | Инструмент       | Что делает                                     | Стек                                                                                                                                                            | Документация                                     |
 |------------------|------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
-| **cpcert**       | Контейнер КриптоПро -> PEM (сертификат + ключ) | ![Go](https://img.shields.io/badge/-Go-00ADD8?logo=go&logoColor=white)                                                                                          |                                                  |
-| **xades-signer** | Enveloped XAdES-ГОСТ подпись произвольного XML | ![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white) ![Flask](https://img.shields.io/badge/-Flask-000?logo=flask&logoColor=white) | [xades-signer/README.md](xades-signer/README.md) |                                                       | [cpcert/README.md](cpcert/README.md)             |
+| **cpcert**       | Контейнер КриптоПро -> PEM (сертификат + ключ) | ![Go](https://img.shields.io/badge/-Go-00ADD8?logo=go&logoColor=white)                                                                                          | [cpcert/README.md](cpcert/README.md)             |
+| **xades-signer** | Enveloped XAdES-ГОСТ подпись произвольного XML | ![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white) ![Flask](https://img.shields.io/badge/-Flask-000?logo=flask&logoColor=white) | [xades-signer/README.md](xades-signer/README.md) |                                                       |
 
 Команды для взаимодействия с этими модулями сгруппированы в Makefile. Чтобы увидеть полный список с описаниями используйте `make help`
 
