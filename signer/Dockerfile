@@ -107,7 +107,7 @@ RUN apt-get remove curl -y || true \
   && rm -rf "/usr/local/src/curl-${CURL_VERSION}.tar.gz" "/usr/local/src/curl-${CURL_VERSION}"
 
 # Установка Python библиотек
-RUN pip3 install lxml flask
+RUN pip3 install lxml flask asn1crypto
 
 # Проверка GOST engine
 RUN openssl engine -t | grep gost

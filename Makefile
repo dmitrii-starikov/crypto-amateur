@@ -4,7 +4,7 @@ ifneq (,$(wildcard ./.env))
 endif
 
 DOCKER_COMPOSE ?= docker compose
-XADES_PORT     ?= 888
+SIGNER_PORT    ?= 888
 OUT            ?= data/certs
 NAME            = $(notdir $(basename $(DIR:/=)))
 HOST_UID       := $(shell id -u)
@@ -17,25 +17,25 @@ help:  ## Показать список команд
 		/^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 4); next } \
 		/^[a-zA-Z0-9_-]+:.*##/ { printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-##@ xades-signer: подпись XML
-xs-build:    ## Собрать образ (OpenSSL+GOST)
-	$(DOCKER_COMPOSE) build xades-signer
-xs-up:       ## Поднять сервис подписи (API на :888)
-	$(DOCKER_COMPOSE) up -d xades-signer
-xs-down:     ## Остановить и убрать контейнеры
+##@ signer: подпись (XAdES / CAdES, ГОСТ)
+sig-build:    ## Собрать образ (OpenSSL+GOST)
+	$(DOCKER_COMPOSE) build signer
+sig-up:       ## Поднять сервис подписи (API на :888)
+	$(DOCKER_COMPOSE) up -d signer
+sig-down:     ## Остановить и убрать контейнеры
 	$(DOCKER_COMPOSE) down
-xs-restart:  ## Перезапустить сервис
-	$(MAKE) xs-down xs-up
-xs-logs:     ## Логи подписывателя
-	$(DOCKER_COMPOSE) logs -f xades-signer
-xs-check:    ## Проверить окружение (openssl, gost engine)
-	$(DOCKER_COMPOSE) run --rm xades-signer check
-xs-health:   ## Пинг API /health
-	curl -fsS http://localhost:$(XADES_PORT)/health && echo
-xs-bash:     ## Shell внутри контейнера
-	$(DOCKER_COMPOSE) run --rm xades-signer bash
-xs-start:    ## Собрать и поднять
-	$(MAKE) xs-build xs-up
+sig-restart:  ## Перезапустить сервис
+	$(MAKE) sig-down sig-up
+sig-logs:     ## Логи подписывателя
+	$(DOCKER_COMPOSE) logs -f signer
+sig-check:    ## Проверить окружение (openssl, gost engine)
+	$(DOCKER_COMPOSE) run --rm signer check
+sig-health:   ## Пинг API /health
+	curl -fsS http://localhost:$(SIGNER_PORT)/health && echo
+sig-bash:     ## Shell внутри контейнера
+	$(DOCKER_COMPOSE) run --rm signer bash
+sig-start:    ## Собрать и поднять
+	$(MAKE) sig-build sig-up
 
 ##@ cpcert: конвертер ключей КриптоПро в PEM
 cpcert-build:  ## Собрать образ конвертера
@@ -54,4 +54,4 @@ cpcert-pem:  ## Склеенный PEM в stdout: make cpcert-pem DIR=... PASS=.
 	@test -n "$(DIR)" || { echo "укажи DIR=путь_к_контейнеру (PASS=пароль)"; exit 1; }
 	@docker run --rm -v "$(abspath $(DIR))":/container:ro crypto-amateur-cpcert /container "$(PASS)"
 
-.PHONY: help xs-build xs-up xs-down xs-logs xs-check xs-bash xs-health xs-start xs-restart cpcert-build cpcert cpcert-pem
+.PHONY: help sig-build sig-up sig-down sig-logs sig-check sig-bash sig-health sig-start sig-restart cpcert-build cpcert cpcert-pem

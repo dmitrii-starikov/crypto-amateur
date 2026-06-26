@@ -1,19 +1,19 @@
 services:
-  xades-signer:
-    build: ./xades-signer
-    container_name: crypto-amateur-xades-signer
+  signer:
+    build: ./signer
+    container_name: crypto-amateur-signer
     environment:
       OPENSSL_CONF: /usr/local/ssl/openssl.cnf
       OPENSSL_ENGINES: /usr/local/ssl/lib/engines-1.1
       LD_LIBRARY_PATH: /usr/local/ssl/lib
     volumes:
-      # Общий стор данных проекта: сюда get-cpcert кладёт ключи, signer их читает
+      # Общий стор данных проекта: сюда cpcert кладёт ключи, signer их читает
       - ./data/certs:/app/certs
       - ./data/xml:/app/xml
       # Код подписывателя (mount для удобной правки без пересборки)
-      - ./xades-signer/scripts:/app/scripts
+      - ./signer/scripts:/app/scripts
     working_dir: /app
     stdin_open: true
     tty: true
     ports:
-      - "${XADES_PORT:-888}:8080"
+      - "${SIGNER_PORT:-888}:8080"

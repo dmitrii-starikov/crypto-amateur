@@ -3,6 +3,7 @@
 *.p12
 *.key
 *.00*/
+*.p7s
 !**/data/xml/*.xml
 *.cer
 *.crt
