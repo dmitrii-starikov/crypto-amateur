@@ -54,4 +54,12 @@ cpcert-pem:  ## Склеенный PEM в stdout: make cpcert-pem DIR=... PASS=.
 	@test -n "$(DIR)" || { echo "укажи DIR=путь_к_контейнеру (PASS=пароль)"; exit 1; }
 	@docker run --rm -v "$(abspath $(DIR))":/container:ro crypto-amateur-cpcert /container "$(PASS)"
 
-.PHONY: help sig-build sig-up sig-down sig-logs sig-check sig-bash sig-health sig-start sig-restart cpcert-build cpcert cpcert-pem
+##@ certinfo: инспектор ГОСТ-сертификата
+certinfo-build:  ## Собрать образ инспектора
+	docker build -t crypto-amateur-certinfo ./certinfo
+certinfo:  ## Разбор сертификата: make certinfo FILE=data/certs/valid.cer [JSON=1]
+	@test -n "$(FILE)" || { echo "укажи FILE=путь_к_сертификату (JSON=1 для JSON)"; exit 1; }
+	@docker run --rm -v "$(abspath $(FILE))":/cert.cer:ro crypto-amateur-certinfo \
+		$(if $(JSON),-json) /cert.cer
+
+.PHONY: help sig-build sig-up sig-down sig-logs sig-check sig-bash sig-health sig-start sig-restart cpcert-build cpcert cpcert-pem certinfo-build certinfo
